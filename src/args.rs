@@ -55,6 +55,8 @@ pub struct Args {
     pub recursive: bool,
     /// Enable table formatting
     pub format_tables: bool,
+    /// Indent based on delimiters (brackets, braces, parens)
+    pub indent_delims: bool,
 }
 
 /// Arguments using Options to track CLI/config file/default values
@@ -101,6 +103,8 @@ pub struct OptionArgs {
     pub recursive: Option<bool>,
     #[merge(strategy= merge::option::overwrite_none)]
     pub format_tables: Option<bool>,
+    #[merge(strategy= merge::option::overwrite_none)]
+    pub indent_delims: Option<bool>,
 }
 
 fn merge_wrap_chars(left: &mut Vec<char>, right: Vec<char>) {
@@ -169,6 +173,7 @@ impl Default for OptionArgs {
             files: vec![],
             recursive: Some(false),
             format_tables: Some(false),
+            indent_delims: Some(true),
         }
     }
 }
@@ -197,6 +202,7 @@ impl OptionArgs {
             files: vec![],
             recursive: None,
             format_tables: None,
+            indent_delims: None,
         }
     }
 }
@@ -260,6 +266,7 @@ impl Args {
             files: args.files,
             recursive: args.recursive.unwrap(),
             format_tables: args.format_tables.unwrap(),
+            indent_delims: args.indent_delims.unwrap(),
         }
     }
 
@@ -399,6 +406,7 @@ impl fmt::Display for Args {
         display_arg_line(f, "wrapmin", &self.wrapmin.to_string())?;
         display_arg_line(f, "tabsize", &self.tabsize.to_string())?;
         display_arg_line(f, "tabchar", &self.tabchar.to_string())?;
+        display_arg_line(f, "indent-delims", &self.indent_delims.to_string())?;
         display_arg_line(f, "stdin", &self.stdin.to_string())?;
         match &self.config {
             None => display_arg_line(f, "config", "None")?,
