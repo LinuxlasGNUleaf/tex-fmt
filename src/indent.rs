@@ -155,9 +155,6 @@ fn get_indent(
         diff += diff_back_delim.0;
         back += diff_back_delim.1;
     }
-    let diff_back_delim = get_diff_back_delim(line);
-    diff += diff_back_delim.0;
-    back += diff_back_delim.1;
     let actual = prev_indent.actual + diff;
     let visual = prev_indent.actual - back;
     Indent { actual, visual }
