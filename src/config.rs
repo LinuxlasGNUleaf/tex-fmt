@@ -170,7 +170,9 @@ pub fn get_config_args(
         format_tables: config
             .get("format-tables")
             .map(|x| x.as_bool().unwrap()),
-        indent_delims: config.get("indent-delims").map(|x| x.as_bool().unwrap()),
+        indent_delims: config
+            .get("indent-delims")
+            .map(|x| x.as_bool().unwrap()),
     };
     Some(args)
 }
