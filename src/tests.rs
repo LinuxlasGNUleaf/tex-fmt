@@ -7,7 +7,17 @@ use colored::Colorize;
 use merge::Merge;
 use similar::{ChangeTag, TextDiff};
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
+
+#[test]
+fn test_indent_delims_are_not_double_counted() {
+    let mut logs = Vec::<Log>::new();
+    let args = Args::from(OptionArgs::default());
+    let formatted =
+        format_file("(\nx\n)\n", Path::new("test.tex"), &args, &mut logs);
+
+    assert_eq!(formatted, "(\n  x\n)\n");
+}
 
 fn test_file(
     source_file: &PathBuf,
